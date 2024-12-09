@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://d0h5bilq4bi4i"]
+
+[node name="WebcyteCollection" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(27.44, 49.32)
+color = Color(0.596078, 0.443137, 1, 1)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 355.0
+offset_right = 1021.0
+offset_bottom = 2051.0
+scale = Vector2(1, 0.88)
+columns = 3
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 27.0
+offset_right = 783.0
+offset_bottom = 104.0
+scale = Vector2(3, 3)
+theme_override_font_sizes/font_size = 50
+text = "Back"

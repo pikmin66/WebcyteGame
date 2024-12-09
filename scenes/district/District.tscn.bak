@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://district_scene"]
+
+[sub_resource type="DynamicFont" id="RobotoBoldFont"]
+font_path = "res://assets/fonts/Roboto-Bold.ttf"
+font_size = 48
+
+[node name="District" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("res://scripts/District.gd")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 270.0
+offset_top = 384.0
+offset_right = 810.0
+offset_bottom = 1344.0
+columns = 2
+
+[node name="Slot1" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+texture_normal = preload("res://assets/images/slot_normal.png")
+texture_pressed = preload("res://assets/images/slot_pressed.png")
+texture_hover = preload("res://assets/images/slot_hover.png")
+
+[node name="Slot2" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+texture_normal = preload("res://assets/images/slot_normal.png")
+texture_pressed = preload("res://assets/images/slot_pressed.png")
+texture_hover = preload("res://assets/images/slot_hover.png")
+
+[node name="ResourceCredits" type="Label" parent="."]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 40.0
+offset_right = 324.0
+offset_bottom = 120.0
+text = "Credits: 0"
+theme_override_fonts/font = SubResource("RobotoBoldFont")
+
+[node name="DataPoints" type="Label" parent="."]
+layout_mode = 0
+offset_left = 756.0
+offset_top = 40.0
+offset_right = 972.0
+offset_bottom = 120.0
+text = "Data Points: 0"
+theme_override_fonts/font = SubResource("RobotoBoldFont")
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 1728.0
+offset_right = 162.0
+offset_bottom = 1848.0
+text = "Back"
+theme_override_fonts/font = SubResource("RobotoBoldFont")
+
+[node name="SynergyPanel" type="Control" parent="."]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 1536.0
+offset_right = 864.0
+offset_bottom = 1824.0
+rect_min_size = Vector2(300, 100)

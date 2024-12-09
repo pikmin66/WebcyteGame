@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://cid7o3umibvaj"]
+
+[ext_resource type="Script" path="res://scripts/WebcyteUpgradePopup.gd" id="1_1qsai"]
+
+[node name="WebcyteUpgradePopup" type="Window"]
+position = Vector2i(0, 36)
+size = Vector2i(800, 500)
+transient = true
+script = ExtResource("1_1qsai")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 90
+text = "Upgrade Webcyte"
+
+[node name="WebcyteInfo" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Webcyte Name
+Element: 
+Species: "
+
+[node name="UpgradeButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Upgrade"

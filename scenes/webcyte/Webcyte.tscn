@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ijr78dduiqm4"]
+
+[ext_resource type="Script" path="res://scripts/Webcyte.gd" id="1_mna5f"]
+
+[node name="Webcyte" type="TextureButton"]
+script = ExtResource("1_mna5f")

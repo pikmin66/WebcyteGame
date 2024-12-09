@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cv67y20xi4ceb"]
+
+[ext_resource type="Script" path="res://scripts/SynergyCollectionResource.gd" id="1_ihjin"]
+
+[resource]
+script = ExtResource("1_ihjin")
+dual_synergies = Array[Resource]([])
+triple_synergies = Array[Resource]([])

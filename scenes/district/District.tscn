@@ -1,0 +1,147 @@
+[gd_scene load_steps=9 format=3 uid="uid://b3prgctilpocf"]
+
+[ext_resource type="Texture2D" uid="uid://de1xxrh065gcr" path="res://assets/images/default_normal.png" id="1_2q75m"]
+[ext_resource type="Script" path="res://scripts/District.gd" id="1_lkmxk"]
+[ext_resource type="Texture2D" uid="uid://cgeqrqd7k6ve4" path="res://assets/images/default_pressed.png" id="2_lcput"]
+[ext_resource type="Texture2D" uid="uid://dh26adkqrqka4" path="res://assets/images/E96BD93D-DA94-4A69-B3B9-E12EC77350C8-5684-00000583F7CA0E50.png" id="2_s2k0a"]
+[ext_resource type="Texture2D" uid="uid://cljeb2wpkpy5t" path="res://assets/images/default_hover.png" id="3_dkese"]
+[ext_resource type="Script" path="res://scripts/Webcyte.gd" id="5_7egfw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3htj8"]
+font_size = 50
+font_color = Color(0.00351917, 0.00351917, 0.00351917, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xptwc"]
+font_size = 50
+font_color = Color(0, 0, 0, 1)
+
+[node name="District" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_lkmxk")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -3
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(27, 48.16)
+texture = ExtResource("2_s2k0a")
+expand_mode = 5
+
+[node name="ResourceCredits" type="Label" parent="."]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 86.0
+offset_right = 436.0
+offset_bottom = 155.0
+text = "Resource Credits"
+label_settings = SubResource("LabelSettings_3htj8")
+
+[node name="DataPoints" type="Label" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 166.0
+offset_right = 372.0
+offset_bottom = 235.0
+text = "Data Points: 0"
+label_settings = SubResource("LabelSettings_xptwc")
+
+[node name="BackButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 732.0
+offset_top = 108.0
+offset_right = 855.0
+offset_bottom = 185.0
+scale = Vector2(2, 2)
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="SynergyPanel" type="Control" parent="."]
+custom_minimum_size = Vector2(300, 200)
+anchors_preset = 0
+offset_left = 364.0
+offset_top = 509.0
+offset_right = 664.0
+offset_bottom = 709.0
+
+[node name="WebcytePopup" type="PopupPanel" parent="."]
+size = Vector2i(900, 1200)
+min_size = Vector2i(900, 1200)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 535.0
+offset_right = 491.0
+offset_bottom = 1079.0
+scale = Vector2(3.24628, 2.60146)
+columns = 2
+
+[node name="Slot1" type="TextureButton" parent="GridContainer"]
+z_index = 3
+custom_minimum_size = Vector2(125, 110)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("1_2q75m")
+texture_pressed = ExtResource("2_lcput")
+texture_hover = ExtResource("3_dkese")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_7egfw")
+webcyte_name = "Regifire Test"
+
+[node name="Slot2" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(125, 110)
+layout_mode = 2
+texture_normal = ExtResource("1_2q75m")
+texture_pressed = ExtResource("2_lcput")
+texture_hover = ExtResource("3_dkese")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_7egfw")
+abilities = Array[String]([""])
+
+[node name="Slot3" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(125, 110)
+layout_mode = 2
+texture_normal = ExtResource("1_2q75m")
+texture_pressed = ExtResource("2_lcput")
+texture_hover = ExtResource("3_dkese")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_7egfw")
+
+[node name="Slot4" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(125, 110)
+layout_mode = 2
+texture_normal = ExtResource("1_2q75m")
+texture_pressed = ExtResource("2_lcput")
+texture_hover = ExtResource("3_dkese")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_7egfw")
+
+[node name="Slot5" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+texture_normal = ExtResource("1_2q75m")
+texture_pressed = ExtResource("2_lcput")
+texture_hover = ExtResource("3_dkese")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_7egfw")
+
+[node name="Slot6" type="TextureButton" parent="GridContainer"]
+custom_minimum_size = Vector2(125, 110)
+layout_mode = 2
+texture_normal = ExtResource("1_2q75m")
+texture_pressed = ExtResource("2_lcput")
+texture_hover = ExtResource("3_dkese")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_7egfw")
+
+[node name="ResourceGenerator" type="Timer" parent="."]
+autostart = true

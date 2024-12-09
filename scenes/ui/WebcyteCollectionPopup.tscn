@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbdv7b83g6ag"]
+
+[ext_resource type="Script" path="res://scripts/WebcyteCollection.gd" id="1_jpgvu"]
+
+[node name="WebcyteCollectionPopup" type="Popup"]
+size = Vector2i(1027, 1092)
+visible = true
+script = ExtResource("1_jpgvu")
+
+[node name="BackButton" type="Button" parent="."]
+visible = false
+offset_left = 322.0
+offset_top = 20.0
+offset_right = 367.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -1
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(27.44, 49.32)
+color = Color(0.596078, 0.443137, 1, 1)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(500, 500)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.399999, 0.16)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
