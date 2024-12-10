@@ -1,0 +1,57 @@
+{
+  "CanvasDistrict": {
+    "element_focus": "Normal",
+    "starting_webcytes": [
+      {
+        "name": "Flame Sprite",
+        "element": "Fire",
+        "level": 1,
+        "img_normal": "res://assets/images/flame_sprite_normal.png",
+        "img_pressed": "res://assets/images/flame_sprite_pressed.png",
+        "img_hover": "res://assets/images/flame_sprite_hover.png",
+        "upgrade_cost": 50,
+        "resource_generation": 10
+      },
+      {
+        "name": "Ember Wisp",
+        "element": "Fire",
+        "level": 1,
+        "img_normal": "res://assets/images/ember_wisp_normal.png",
+        "img_pressed": "res://assets/images/ember_wisp_pressed.png",
+        "img_hover": "res://assets/images/ember_wisp_hover.png",
+        "upgrade_cost": 50,
+        "resource_generation": 10
+      }
+    ]
+  },
+  "TealDistrict": {
+    "element_focus": "Water",
+    "starting_webcytes": [
+      {
+        "name": "Aqua Nymph",
+        "element": "Water",
+        "level": 1,
+        "img_normal": "res://assets/images/aqua_nymph_normal.png",
+        "img_pressed": "res://assets/images/aqua_nymph_pressed.png",
+        "img_hover": "res://assets/images/aqua_nymph_hover.png",
+        "upgrade_cost": 50,
+        "resource_generation": 10
+      }
+    ]
+  },
+  "OpalDistrict": {
+    "element_focus": "Earth",
+    "starting_webcytes": [
+      {
+        "name": "Rock Golem",
+        "element": "Earth",
+        "level": 1,
+        "img_normal": "res://assets/images/rock_golem_normal.png",
+        "img_pressed": "res://assets/images/rock_golem_pressed.png",
+        "img_hover": "res://assets/images/rock_golem_hover.png",
+        "upgrade_cost": 50,
+        "resource_generation": 10
+      }
+    ]
+  }
+}

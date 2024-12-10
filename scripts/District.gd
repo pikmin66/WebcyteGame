@@ -1,64 +1,83 @@
-# scripts/District.gd
+# res://scripts/district.gd
 extends Control
+class_name District  # Optional: Assign a class name for easier referencing
+
+var webcytes = {}
+var current_selected_slot = -1
+@onready var grid_container: GridContainer = get_node("GridContainer")
+@onready var resource_generator: Timer = get_node_or_null("ResourceGenerator")
 
 # Preload the Webcyte Collection popup scene
 var webcyte_collection_popup_scene: PackedScene = preload("res://scenes/ui/WebcyteCollectionPopup.tscn")
 
-# Dictionary to store Webcytes in slots
-var webcytes = {}  # Key: slot_number (int), Value: Webcyte instance
+# Preload the WorldMap scene
+var world_map_scene_path = "res://scenes/world/WorldMap.tscn"
 
-# Timer node for resource generation
-@onready var resource_generator: Timer = get_node_or_null("ResourceGenerator") as Timer
-
-# Reference to GridContainer
-@onready var grid_container: GridContainer = get_node("GridContainer") as GridContainer
-
-# Variable to store the currently selected slot for assignment
-var current_selected_slot: int = -1
+var district_name = ""  # Will set this in _ready from the scene name
 
 func _ready():
+    district_name = name  # Use the scene's name to identify which district we are in
+    _load_district_config(district_name)
+    
     if resource_generator:
-        # Connect the Resource Generator Timer using Callable
         resource_generator.timeout.connect(Callable(self, "_on_ResourceGenerator_timeout"))
         resource_generator.start()
-        print("[INFO] District initialized and Resource Generator started.")
+        print("[INFO] District:", district_name, "initialized and Resource Generator started.")
     else:
         push_error("[ERROR] ResourceGenerator node not found in District scene.")
-        return  # Exit _ready() to prevent further errors
+        return
 
-    # Debug: List all Webcyte nodes within GridContainer
-    print("[DEBUG] Listing all children of GridContainer:")
-    for child in grid_container.get_children():
-        print(" - ", child.name, "(", child.get_class(), ")")
-
-    # Connect signals for all slots within GridContainer
+    # Connect slots as before
     for slot_number in range(1, 7):
         var slot_name = "Slot" + str(slot_number)
         var slot = grid_container.get_node_or_null(slot_name)
-        if slot:
-            if slot is Webcyte:
-                # Safe to cast now
-                var webcyte_slot = slot as Webcyte
-                # Connect the "pressed" signal for single taps using Callable with binding
-                webcyte_slot.pressed.connect(Callable(self, "_on_Slot_pressed").bind(slot_number))
+        if slot and slot is Webcyte:
+            var webcyte_slot = slot as Webcyte
+            webcyte_slot.pressed.connect(Callable(self, "_on_Slot_pressed").bind(slot_number))
+            if webcyte_slot.has_signal("long_pressed"):
+                webcyte_slot.long_pressed.connect(Callable(self, "_on_Slot_long_pressed").bind(slot_number))
+            add_webcyte_to_slot(slot_number, webcyte_slot)
+    
+    # Connect the BackButton (make sure the node name matches exactly)
+    var back_button = get_node_or_null("BackButton")
+    if back_button and back_button is Button:
+        back_button.pressed.connect(_on_BackButton_pressed)
+    else:
+        print("[WARNING] BackButton not found or not a Button.")
 
-                # Connect the "long_pressed" signal for long presses
-                if webcyte_slot.has_signal("long_pressed"):
-                    webcyte_slot.long_pressed.connect(Callable(self, "_on_Slot_long_pressed").bind(slot_number))
-                    print("[INFO] Connected 'long_pressed' signal for", slot_name)
-                else:
-                    print("[WARNING] " + slot_name + " does not have a 'long_pressed' signal.")
+func _on_BackButton_pressed():
+    # When the back button is pressed, go back to the WorldMap scene
+    get_tree().change_scene_to_file(world_map_scene_path)
 
-                print("[INFO] Connected 'pressed' signal for", slot_name)
+func _load_district_config(district_name: String):
+    if FileAccess.file_exists("res://data/district_config.json"):
+        var f = FileAccess.open("res://data/district_config.json", FileAccess.READ)
+        if f:
+            var text = f.get_as_text()
+            var json_parser: JSON = JSON.new()
+            var error = 0
+            var data = json_parser.parse(text, error)
 
-                # Assign to webcytes dictionary
-                add_webcyte_to_slot(slot_number, webcyte_slot)
-            else:
-                push_error("[ERROR] " + slot_name + " is not a Webcyte. Actual class: " + slot.get_class())
-        else:
-            push_error("[ERROR] " + slot_name + " is missing.")
+            if typeof(data) == TYPE_DICTIONARY:
+                # If there is a config for the district, load starting webcytes if available
+                #if data.has(district_name):
+                    var ddata = data[district_name]
+                    if ddata.has("starting_webcytes"):
+                        _assign_starting_webcytes(ddata["starting_webcytes"])
 
-
+func _assign_starting_webcytes(wclist: Array):
+    var slot_idx = 1
+    for wc_data in wclist:
+        if slot_idx > 6:
+            break
+        # Instantiate a Webcyte from data (In a real project, use a factory)
+        var w_scene = preload("res://scenes/webcyte/Webcyte.tscn")
+        var w = w_scene.instantiate() as Webcyte
+        w.webcyte_name = wc_data["name"]
+        w.element = wc_data["element"]
+        w.level = wc_data.get("level", 1)
+        add_webcyte_to_slot(slot_idx, w)
+        slot_idx += 1
 
 # --- Function to Assign Webcytes to Slots ---
 func assign_webcytes_to_slots():
@@ -69,18 +88,11 @@ func assign_webcytes_to_slots():
         push_error("[ERROR] Number of webcytes exceeds available slots.")
         webcyte_count = slot_count  # Limit to available slots
 
-    # Example: Assigning existing Webcyte nodes already set in the editor
-    # If you want to dynamically assign Webcytes, adjust accordingly
-
-    # Clear any existing assignments beyond current setup
     for slot_number in range(1, slot_count + 1):
         var slot = webcytes.get(slot_number, null)
         if slot:
-            # Ensure that slots have default or initial Webcyte data
-            # This step can be customized as per your game's logic
             print("[INFO] Slot", slot_number, "has Webcyte:", slot.webcyte_name)
 
-# --- Function to Assign Webcyte Data ---
 func assign_webcyte_data(
     slot_number: int, webcyte_name: String, element: String, species: String,
     level: int, abilities: Array, img_normal: Texture2D, img_pressed: Texture2D, img_hover: Texture2D,
@@ -89,15 +101,12 @@ func assign_webcyte_data(
     var slot = webcytes.get(slot_number, null)
     if slot:
         print("[DEBUG] Assigning Webcyte to Slot:", slot_number)
-
-        # Assign properties
         slot.webcyte_name = webcyte_name
         slot.element = element
         slot.species = species
         slot.level = level
         slot.abilities = abilities
 
-        # Correct texture assignment
         slot.img_normal = img_normal
         slot.img_pressed = img_pressed
         slot.img_hover = img_hover
@@ -113,13 +122,9 @@ func assign_webcyte_data(
     else:
         push_error("[ERROR] Slot " + str(slot_number) + " is missing or not a Webcyte.")
 
-
-
-# --- Function to Clear a Webcyte Slot ---
 func clear_webcyte_slot(slot_number: int):
     var slot = webcytes.get(slot_number, null)
     if slot:
-        # Reset the Webcyte node to default or empty state
         slot.webcyte_name = "Empty"
         slot.element = ""
         slot.species = ""
@@ -131,18 +136,14 @@ func clear_webcyte_slot(slot_number: int):
         slot.upgrade_cost = 50
         slot.resource_generation = 10
 
-        # Assign placeholder textures
         slot.texture_normal = slot.img_normal
         slot.texture_pressed = slot.img_pressed
         slot.texture_hover = slot.img_hover
 
         print("[INFO] Cleared Slot" + str(slot_number))
     else:
-        push_error("[ERROR] Slot" + str(slot_number) + " does not contain a Webcyte or was not found.")
+        push_error("[ERROR] Slot " + str(slot_number) + " does not contain a Webcyte or was not found.")
 
-
-
-# --- Handle Slot Pressed (Single Tap) ---
 func _on_Slot_pressed(slot_number: int):
     if webcytes.has(slot_number):
         var webcyte_instance = webcytes[slot_number]
@@ -150,29 +151,22 @@ func _on_Slot_pressed(slot_number: int):
     else:
         print("[INFO] No Webcyte in Slot", slot_number)
 
-# --- Handle Slot Long Press (Open Webcyte Collection Popup) ---
 func _on_Slot_long_pressed(slot_number: int):
     current_selected_slot = slot_number
     open_webcyte_collection_popup()
 
-# Override to Handle Clicks on District Background
 func _input(event: InputEvent):
     if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
         var mouse_pos = event.position
-        
-        # Ensure click happens **outside** the collection grid
         if not grid_container.get_global_rect().has_point(mouse_pos):
             print("[INFO] District background clicked. Generating resources...")
             _generate_resources()
 
-
-# Generate Resources Using ResourceManager
 func _generate_resources():
     var generated_amount = int(100 * ResourceManager.resource_generation_multiplier)
     ResourceManager.add_resource(generated_amount)
     print("[INFO] Generated", generated_amount, "resources.")
-    
-# --- Open Webcyte Collection Popup ---
+
 func open_webcyte_collection_popup():
     var popup = webcyte_collection_popup_scene.instantiate()
     if popup:
@@ -182,17 +176,13 @@ func open_webcyte_collection_popup():
         popup.popup_centered()
         print("[INFO] Webcyte Collection popup opened for Slot", str(current_selected_slot))
 
-
-# Handle Webcyte Selection from Popup
 func _on_Webcyte_selected_from_popup(selected_webcyte: Webcyte):
     if current_selected_slot == -1:
         push_error("[ERROR] No slot selected for Webcyte assignment.")
         return
 
-    # Fetch the relevant slot
     var slot = webcytes.get(current_selected_slot, null)
     if slot:
-        # Assign textures directly to the slot's button properties
         slot.webcyte_name = selected_webcyte.webcyte_name
         slot.element = selected_webcyte.element
         slot.species = selected_webcyte.species
@@ -204,7 +194,6 @@ func _on_Webcyte_selected_from_popup(selected_webcyte: Webcyte):
         slot.upgrade_cost = selected_webcyte.upgrade_cost
         slot.resource_generation = selected_webcyte.resource_generation
 
-        # Update the slot's texture
         slot.texture_normal = selected_webcyte.img_normal
         slot.texture_pressed = selected_webcyte.img_pressed
         slot.texture_hover = selected_webcyte.img_hover
@@ -213,11 +202,8 @@ func _on_Webcyte_selected_from_popup(selected_webcyte: Webcyte):
     else:
         push_error("[ERROR] Slot " + str(current_selected_slot) + " is not found.")
     
-    current_selected_slot = -1  # Reset after assignment
+    current_selected_slot = -1
 
-
-
-# --- Handle Elemental Tap ---
 func _handle_elemental_tap(webcyte: Webcyte):
     match webcyte.element.to_lower():
         "fire":
@@ -231,32 +217,26 @@ func _handle_elemental_tap(webcyte: Webcyte):
         _:
             print("[WARNING] Unknown element:", webcyte.element)
 
-# --- Define Elemental Handlers ---
 func _handle_fire_element(webcyte: Webcyte):
     var bonus = 20 * webcyte.level
     if ResourceManager.spend_resource_credits(bonus):
-        ResourceManager.add_resource(bonus * 2)  # Example: double the spent credits
+        ResourceManager.add_resource(bonus * 2)
         print("[INFO] Fire Element tapped! Generated", bonus * 2, "resources.")
     else:
         print("[ERROR] Not enough Resource Credits to perform Fire Element tap.")
 
 func _handle_water_element(webcyte: Webcyte):
-    # Example: Boost Webcyte's resource generation temporarily
     webcyte.resource_generation += 5
     print("[INFO] Water Element tapped! Resource generation increased to", webcyte.resource_generation)
 
 func _handle_earth_element(webcyte: Webcyte):
-    # Example: Increase resource generation rate temporarily
-    ResourceManager.set_resource_generation_multiplier(1.5, 30.0)  # 30 seconds duration
+    ResourceManager.set_resource_generation_multiplier(1.5, 30.0)
     print("[INFO] Earth Element tapped! Resource generation rate increased by 50% for 30 seconds.")
 
 func _handle_air_element(webcyte: Webcyte):
-    # Example: Speed up upgrades or resource collection
-    ResourceManager.set_upgrade_speed_multiplier(2.0, 30.0)  # 30 seconds duration
+    ResourceManager.set_upgrade_speed_multiplier(2.0, 30.0)
     print("[INFO] Air Element tapped! Upgrade speed doubled for 30 seconds.")
 
-# --- Function to Add Webcytes to Slots ---
 func add_webcyte_to_slot(slot_number: int, webcyte_instance: Webcyte):
     webcytes[slot_number] = webcyte_instance
     print("[INFO] Added", webcyte_instance.webcyte_name, "to Slot", slot_number)
-    # Optionally, update the slot's texture to represent the Webcyte

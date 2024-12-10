@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3prgctilpocf"]
+[gd_scene load_steps=9 format=3 uid="uid://baw82hc3w5m0w"]
 
-[ext_resource type="Texture2D" uid="uid://de1xxrh065gcr" path="res://assets/images/default_normal.png" id="1_2q75m"]
-[ext_resource type="Script" path="res://scripts/District.gd" id="1_lkmxk"]
-[ext_resource type="Texture2D" uid="uid://cgeqrqd7k6ve4" path="res://assets/images/default_pressed.png" id="2_lcput"]
-[ext_resource type="Texture2D" uid="uid://dh26adkqrqka4" path="res://assets/images/E96BD93D-DA94-4A69-B3B9-E12EC77350C8-5684-00000583F7CA0E50.png" id="2_s2k0a"]
-[ext_resource type="Texture2D" uid="uid://cljeb2wpkpy5t" path="res://assets/images/default_hover.png" id="3_dkese"]
-[ext_resource type="Script" path="res://scripts/Webcyte.gd" id="5_7egfw"]
+[ext_resource type="Script" path="res://scripts/District.gd" id="1_m3l25"]
+[ext_resource type="Texture2D" uid="uid://c3pcjrv856pxr" path="res://assets/images/canvas town.png" id="2_s0oix"]
+[ext_resource type="Texture2D" uid="uid://de1xxrh065gcr" path="res://assets/images/default_normal.png" id="3_1a54w"]
+[ext_resource type="Texture2D" uid="uid://cgeqrqd7k6ve4" path="res://assets/images/default_pressed.png" id="4_j3ufh"]
+[ext_resource type="Texture2D" uid="uid://cljeb2wpkpy5t" path="res://assets/images/default_hover.png" id="5_swfy2"]
+[ext_resource type="Script" path="res://scripts/Webcyte.gd" id="6_lkulj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3htj8"]
 font_size = 50
@@ -15,10 +15,10 @@ font_color = Color(0.00351917, 0.00351917, 0.00351917, 1)
 font_size = 50
 font_color = Color(0, 0, 0, 1)
 
-[node name="District" type="Control"]
+[node name="CanvasDistrict" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_lkmxk")
+script = ExtResource("1_m3l25")
 
 [node name="Background" type="TextureRect" parent="."]
 z_index = -3
@@ -26,7 +26,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(27, 48.16)
-texture = ExtResource("2_s2k0a")
+texture = ExtResource("2_s0oix")
 expand_mode = 5
 
 [node name="ResourceCredits" type="Label" parent="."]
@@ -83,64 +83,64 @@ z_index = 3
 custom_minimum_size = Vector2(125, 110)
 layout_mode = 2
 size_flags_horizontal = 3
-texture_normal = ExtResource("1_2q75m")
-texture_pressed = ExtResource("2_lcput")
-texture_hover = ExtResource("3_dkese")
+texture_normal = ExtResource("3_1a54w")
+texture_pressed = ExtResource("4_j3ufh")
+texture_hover = ExtResource("5_swfy2")
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("5_7egfw")
+script = ExtResource("6_lkulj")
 webcyte_name = "Regifire Test"
 
 [node name="Slot2" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(125, 110)
 layout_mode = 2
-texture_normal = ExtResource("1_2q75m")
-texture_pressed = ExtResource("2_lcput")
-texture_hover = ExtResource("3_dkese")
+texture_normal = ExtResource("3_1a54w")
+texture_pressed = ExtResource("4_j3ufh")
+texture_hover = ExtResource("5_swfy2")
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("5_7egfw")
+script = ExtResource("6_lkulj")
 abilities = [""]
 
 [node name="Slot3" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(125, 110)
 layout_mode = 2
-texture_normal = ExtResource("1_2q75m")
-texture_pressed = ExtResource("2_lcput")
-texture_hover = ExtResource("3_dkese")
+texture_normal = ExtResource("3_1a54w")
+texture_pressed = ExtResource("4_j3ufh")
+texture_hover = ExtResource("5_swfy2")
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("5_7egfw")
+script = ExtResource("6_lkulj")
 
 [node name="Slot4" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(125, 110)
 layout_mode = 2
-texture_normal = ExtResource("1_2q75m")
-texture_pressed = ExtResource("2_lcput")
-texture_hover = ExtResource("3_dkese")
+texture_normal = ExtResource("3_1a54w")
+texture_pressed = ExtResource("4_j3ufh")
+texture_hover = ExtResource("5_swfy2")
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("5_7egfw")
+script = ExtResource("6_lkulj")
 
 [node name="Slot5" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(110, 110)
 layout_mode = 2
-texture_normal = ExtResource("1_2q75m")
-texture_pressed = ExtResource("2_lcput")
-texture_hover = ExtResource("3_dkese")
+texture_normal = ExtResource("3_1a54w")
+texture_pressed = ExtResource("4_j3ufh")
+texture_hover = ExtResource("5_swfy2")
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("5_7egfw")
+script = ExtResource("6_lkulj")
 
 [node name="Slot6" type="TextureButton" parent="GridContainer"]
 custom_minimum_size = Vector2(125, 110)
 layout_mode = 2
-texture_normal = ExtResource("1_2q75m")
-texture_pressed = ExtResource("2_lcput")
-texture_hover = ExtResource("3_dkese")
+texture_normal = ExtResource("3_1a54w")
+texture_pressed = ExtResource("4_j3ufh")
+texture_hover = ExtResource("5_swfy2")
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("5_7egfw")
+script = ExtResource("6_lkulj")
 
 [node name="ResourceGenerator" type="Timer" parent="."]
 autostart = true

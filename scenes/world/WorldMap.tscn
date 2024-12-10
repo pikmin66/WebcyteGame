@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://3pdwqehl6k66"]
+
+[ext_resource type="Script" path="res://scripts/WorldMap.gd" id="1_j2d0y"]
+[ext_resource type="Texture2D" uid="uid://beqcj3swdkc3m" path="res://assets/images/region.png" id="2_4rrbq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kphon"]
+font_size = 150
+font_color = Color(0.486275, 1, 0.282353, 1)
+
+[node name="WorldMap" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_j2d0y")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -295.0
+offset_right = 1892.87
+offset_bottom = 1918.0
+texture = ExtResource("2_4rrbq")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 68.0
+offset_right = 808.0
+offset_bottom = 273.0
+text = "Syphus"
+label_settings = SubResource("LabelSettings_kphon")
+
+[node name="DistrictList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 533.0
+offset_top = 1213.0
+offset_right = 1033.0
+offset_bottom = 1513.0
+theme_override_font_sizes/font_size = 60
+
+[node name="SelectButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 597.0
+offset_top = 1571.0
+offset_right = 1035.0
+offset_bottom = 1784.0
+theme_override_font_sizes/font_size = 150
+text = "Select"

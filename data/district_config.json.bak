@@ -1,0 +1,37 @@
+{
+  "CanvasDistrict": {
+    "element_focus": "Normal",
+    "starting_webcytes": [
+      {
+        "name": "Flame Sprite",
+        "element": "Fire",
+        "level": 1
+      },
+      {
+        "name": "Ember Wisp",
+        "element": "Fire",
+        "level": 1
+      }
+    ]
+  },
+  "TealDistrict": {
+    "element_focus": "Water",
+    "starting_webcytes": [
+      {
+        "name": "Aqua Nymph",
+        "element": "Water",
+        "level": 1
+      }
+    ]
+  },
+  "OpalDistrict": {
+    "element_focus": "Earth",
+    "starting_webcytes": [
+      {
+        "name": "Rock Golem",
+        "element": "Earth",
+        "level": 1
+      }
+    ]
+  }
+}
